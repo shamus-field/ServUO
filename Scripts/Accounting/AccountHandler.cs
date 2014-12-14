@@ -20,7 +20,7 @@ namespace Server.Misc
     public class AccountHandler
     {
         public static PasswordProtection ProtectPasswords = PasswordProtection.NewCrypt;
-        private static readonly int MaxAccountsPerIP = 1;
+        private static readonly int MaxAccountsPerIP = 3;
         private static readonly bool AutoAccountCreation = true;
         private static readonly bool RestrictDeletion = !TestCenter.Enabled;
         private static readonly TimeSpan DeleteDelay = TimeSpan.FromDays(7.0);

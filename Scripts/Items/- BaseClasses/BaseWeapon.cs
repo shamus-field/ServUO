@@ -23,6 +23,10 @@ using Server.Spells.Necromancy;
 using Server.Spells.Ninjitsu;
 using Server.Spells.Sixth;
 using Server.Spells.Spellweaving;
+using System.Text;
+using System.Collections;
+using Server.Targeting;
+
 #endregion
 
 namespace Server.Items
@@ -99,8 +103,9 @@ namespace Server.Items
 		private SlayerName m_Slayer;
 		private SlayerName m_Slayer2;
 
-		#region Imbuing
+		#region SF Imbuing
 		private int m_TimesImbued;
+		private bool m_DImodded;
 		#endregion
 
 		#region Mondain's Legacy
@@ -246,6 +251,8 @@ namespace Server.Items
 				InvalidateProperties();
 			}
 		}
+
+		public bool DImodded { get { return m_DImodded; } set { m_DImodded = value; InvalidateProperties(); } }
 
 		[CommandProperty(AccessLevel.GameMaster)]
 		public AosAttributes Attributes { get { return m_AosAttributes; } set { } }
@@ -2741,7 +2748,7 @@ namespace Server.Items
 			SlayerEntry atkSlayer = SlayerGroup.GetEntryByName(atkWeapon.Slayer);
 			SlayerEntry atkSlayer2 = SlayerGroup.GetEntryByName(atkWeapon.Slayer2);
 
-            if (atkSlayer != null && atkSlayer.Slays(defender) || atkSlayer2 != null && atkSlayer2.Slays(defender))
+			if (atkSlayer != null && atkSlayer.Slays(defender) || atkSlayer2 != null && atkSlayer2.Slays(defender))
 			{
 				return CheckSlayerResult.Slayer;
 			}
@@ -3369,7 +3376,12 @@ namespace Server.Items
 		{
 			base.Serialize(writer);
 
-			writer.Write(11); // version
+			writer.Write(12); // version
+
+			//Version 12
+			#region SF Imbuing
+			writer.Write((bool)m_DImodded);
+			#endregion
 
 			// Version 11
 			writer.Write(m_TimesImbued);
@@ -3693,6 +3705,16 @@ namespace Server.Items
 
 			switch (version)
 			{
+			case 12:
+				{      
+				#region SF Imbuing                  
+                        m_DImodded = reader.ReadBool();
+				#endregion
+
+                        goto case 11;
+                    }
+                
+
 				case 11:
 					{
 						m_TimesImbued = reader.ReadInt();
@@ -4524,6 +4546,15 @@ namespace Server.Items
 			{
 				list.Add(1080418); // (Imbued)
 			}
+
+			#region SF Imbuing
+		if (m_AosAttributes.Brittle > 0)
+                list.Add(1116209); // Brittle
+
+            if (m_AosAttributes.NoRepairs > 0)
+                list.Add("Cannot Be Repaired");
+            #endregion
+
 
 			if (m_Crafter != null)
 			{

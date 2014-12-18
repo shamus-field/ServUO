@@ -1,4 +1,6 @@
 using System;
+using Server;
+using Server.Engines.Craft;
 using Server.Network;
 using Server.Targeting;
 
@@ -135,6 +137,46 @@ namespace Server.Items
                         from.SendLocalizedMessage(1049083); // You cannot use the powder on that item.
                         return;
                     }
+
+		  	    #region SF Imbuing
+                    if ( item is BaseArmor )
+                    {
+                        BaseArmor Ti = (BaseArmor)item as BaseArmor;
+                        if( Ti.Attributes.Brittle > 0)
+                        {
+                            from.SendLocalizedMessage( 1149799 ); // That cannot be used on brittle items.
+                            return;
+                        }
+                    }
+                    else if( item is BaseJewel )
+                    {
+                        BaseJewel Ti = (BaseJewel)item as BaseJewel;
+                        if (Ti.Attributes.Brittle > 0)
+                        {
+                            from.SendLocalizedMessage( 1149799 ); // That cannot be used on brittle items.
+                            return;
+                        }
+                    }
+                    else if( item is BaseHat )
+                    {
+                        BaseHat Ti = (BaseHat)item as BaseHat;
+                        if (Ti.Attributes.Brittle > 0)
+                        {
+                            from.SendLocalizedMessage( 1149799 ); // That cannot be used on brittle items.
+                            return;
+                        }
+                    }
+                    else if( item is BaseWeapon )
+                    {
+                        BaseWeapon Ti = (BaseWeapon)item as BaseWeapon;
+                        if (Ti.Attributes.Brittle > 0)
+                        {
+                            from.SendLocalizedMessage( 1149799 ); // That cannot be used on brittle items.
+                            return;
+                        }
+                    }
+                    #endregion
+
 
                     if ((item.IsChildOf(from.Backpack) || (Core.ML && item.Parent == from)) && this.m_Powder.IsChildOf(from.Backpack))
                     {

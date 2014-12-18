@@ -4,6 +4,7 @@ using Server.ContextMenus;
 using Server.Engines.Craft;
 using Server.Factions;
 using Server.Network;
+using Server;
 
 namespace Server.Items
 {
@@ -65,9 +66,16 @@ namespace Server.Items
         private AosSkillBonuses m_AosSkillBonuses;
         private AosElementAttributes m_AosResistances;
 
-        #region Imbuing
+        #region SF Imbuing
         private int m_TimesImbued;
+
+        private bool m_Physical_Modded;
+        private bool m_Fire_Modded;
+        private bool m_Cold_Modded;
+        private bool m_Poison_Modded;
+        private bool m_Energy_Modded;
         #endregion
+
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int MaxHitPoints
@@ -161,21 +169,17 @@ namespace Server.Items
             }
         }
 		
-        #region Imbuing
+        #region SF Imbuing
         [CommandProperty(AccessLevel.GameMaster)]
-        public int TimesImbued
-        {
-            get
-            {
-                return this.m_TimesImbued;
-            }
-            set
-            {
-                this.m_TimesImbued = value;
-                this.InvalidateProperties();
-            }
-        }
+        public int TimesImbued { get { return m_TimesImbued; } set { m_TimesImbued = value; InvalidateProperties(); } }
+
+        public bool Physical_Modded { get { return m_Physical_Modded; } set { m_Physical_Modded = value; InvalidateProperties(); } }
+        public bool Fire_Modded { get { return m_Fire_Modded; } set { m_Fire_Modded = value; InvalidateProperties(); } }
+        public bool Cold_Modded { get { return m_Cold_Modded; } set { m_Cold_Modded = value; InvalidateProperties(); } }
+        public bool Poison_Modded { get { return m_Poison_Modded; } set { m_Poison_Modded = value; InvalidateProperties(); } }
+        public bool Energy_Modded { get { return m_Energy_Modded; } set { m_Energy_Modded = value; InvalidateProperties(); } }
         #endregion
+
 
         #region Personal Bless Deed
         private Mobile m_BlessedBy;
@@ -944,10 +948,17 @@ namespace Server.Items
         {
             base.GetProperties(list);
 
-            #region Imbuing
-            if (this.m_TimesImbued > 0)
+            #region SF Imbuing
+            if (m_TimesImbued > 0)
                 list.Add(1080418); // (Imbued)
+
+            if (m_AosAttributes.Brittle > 0)
+                list.Add(1116209); // Brittle
+
+            if (m_AosAttributes.NoRepairs > 0)
+                list.Add("Cannot Be Repaired");
             #endregion
+
 			
             if (this.m_Crafter != null)
                 list.Add(1050043, this.m_Crafter.Name); // crafted by ~1_NAME~
@@ -1208,7 +1219,16 @@ namespace Server.Items
         {
             base.Serialize(writer);
 
-            writer.Write(6); // version
+            writer.Write(7); // version
+
+		 // Version 7
+		 #region SF Imbuing
+            writer.Write((bool)Physical_Modded);
+            writer.Write((bool)Fire_Modded);
+            writer.Write((bool)Cold_Modded);
+            writer.Write((bool)Poison_Modded);
+            writer.Write((bool)Energy_Modded);
+            #endregion
 
             // Version 6
             writer.Write((int)this.m_TimesImbued); // Imbuing
@@ -1324,6 +1344,20 @@ namespace Server.Items
 
             switch ( version )
             {
+			case 7:
+				{
+				  #region SF Imbuing
+                        Physical_Modded = reader.ReadBool();
+                        Fire_Modded = reader.ReadBool();
+                        Cold_Modded = reader.ReadBool();
+                        Poison_Modded = reader.ReadBool();
+                        Energy_Modded = reader.ReadBool();
+				  #endregion
+
+                        goto case 6;
+                    }
+                
+
                 case 6:
                     {
                         this.m_TimesImbued = reader.ReadInt();

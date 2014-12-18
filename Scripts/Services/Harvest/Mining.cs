@@ -127,7 +127,8 @@ namespace Server.Engines.Harvest
                     new BonusHarvestResource(100, .1, 1072570, typeof(EcruCitrine)),
                     new BonusHarvestResource(100, .1, 1072564, typeof(FireRuby)),
                     new BonusHarvestResource(100, .1, 1072566, typeof(PerfectEmerald)),
-                    new BonusHarvestResource(100, .1, 1072568, typeof(Turquoise))
+                    new BonusHarvestResource(100, .1, 1072568, typeof(Turquoise)),
+                    new BonusHarvestResource(100, .05, 1113344, typeof(CrystallineBlackrock))
                 };
             }
 

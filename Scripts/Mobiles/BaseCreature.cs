@@ -63,9 +63,6 @@ namespace Server.Mobiles
 		//"(All/Name) attack"  All or the specified pet(s) currently under your control attack the target.
 		Patrol, //"(Name) patrol"  Roves between two or more guarded targets.
 		Release, //"(Name) release"  Releases pet back into the wild (removes "tame" status).
-        //Nerun's Distro - Changes Part A >>> [1st change of 2]
-        Dismiss,		//"(Name) dismiss"  Dismiss hireling (removes "tame" status).
-        // end 1st
 		Stay, //"(All/Name) stay" All or the specified pet(s) will stop and stay in current spot.
 		Stop, //"(All/Name) stop Cancels any current orders to attack, guard or follow.
 		Transfer //"(Name) transfer" Transfers complete ownership to targeted player.
@@ -2619,11 +2616,6 @@ namespace Server.Mobiles
 				case AIType.AI_OrcScout:
 					m_AI = new OrcScoutAI(this);
 					break;
-			//Nerun's Distro - Changes Part B >>> [2nd change of 2]
-                case AIType.AI_Ninja:
-                    m_AI = new NinjaAI(this);
-                    break;
-			// end 2nd
 				case AIType.AI_Spellbinder:
 					m_AI = new SpellbinderAI(this);
 					break;
@@ -4903,8 +4895,142 @@ namespace Server.Mobiles
 					PackItem(new DaemonBone(bones));
 				}
 			}
-						
-			
+
+			#region SF Imbuing - Ingredient Drops -
+
+            if (!NoKillAwards && !Summoned)
+            {                               
+                Item ingredient = null;
+
+                int chance = Utility.Random(200);
+
+                // = Daemon type [Essence of Achievement] or [Essence of Passion] ==================================
+                if (this is Daemon || this is Balron || this is ElderGazer || this is Succubus || this is ArcaneDaemon || this is IceFiend || this is Putrefier || this is Oni || this is FanDancer || this is Devourer)
+                {
+                    // = 1/33 chance
+                    if (chance == 1 || chance == 41 || chance == 81 || chance == 121 || chance == 161 || chance == 199)
+                    {
+                        if (Utility.RandomBool() == true) { ingredient = new EssenceAchievement(); }
+                        else { ingredient = new EssencePassion(); }
+                    }
+                    else if (this.Fame > 20000 && (Utility.RandomDouble() > 0.95))
+                    {
+                        if (Utility.RandomBool() == true) { ingredient = new EssenceAchievement(); }
+                        else { ingredient = new EssencePassion(); }
+                    }
+                }
+                else if (this is Imp || this is Gazer || this is Moloch || this is ChaosDaemon || this is Doppleganger || this is GoreFiend)
+                {
+                    // = 1/66 chance
+                    if (chance == 1 || chance == 81 || chance == 161)
+                    {
+                        if (Utility.RandomBool() == true) { ingredient = new EssenceAchievement(); }
+                        else { ingredient = new EssencePassion(); }
+                    }
+                }
+                // = Undead type [Essence of Direction] or [Essence of Precision] ==================================
+                else if (this is LichLord || this is RevenantLion || this is SkeletalDragon || this is AncientLich || this is RottingCorpse || this is BoneDemon)
+                {
+                    // = 1/33 chance
+                    if (chance == 1 || chance == 41 || chance == 81 || chance == 121 || chance == 161 || chance == 199)
+                    {
+                        if (Utility.RandomBool() == true) { ingredient = new EssenceDirection(); }
+                        else { ingredient = new EssencePrecision(); }
+                    }
+                    else if (this.Fame > 20000 && (Utility.RandomDouble() > 0.95))
+                    {
+                        if (Utility.RandomBool() == true) { ingredient = new EssenceDirection(); }
+                        else { ingredient = new EssencePrecision(); }
+                    }
+                }
+                else if (this is BoneMagi || this is Lich || this is Shade || this is Spectre || this is Wraith || this is Bogle || this is BoneKnight || this is SkeletalKnight || this is Mummy || this is WailingBanshee || this is FleshGolem)
+                {
+                    // = 1/66 chance
+                    if (chance == 1 || chance == 81 || chance == 161)
+                    {
+                        if (Utility.RandomBool() == true) { ingredient = new EssenceDirection(); }
+                        else { ingredient = new EssencePrecision(); }
+                    }
+                }
+                // = Repond type [Essence of Balance] or [Essence of Control] ==================================
+                else if (this is ArcticOgreLord || this is Cyclops || this is MeerEternal || this is MeerMage || this is MeerCaptain || this is OgreLord || this is OrcBrute || this is OgreLord || this is Titan)
+                {
+                    // = 1/33 chance
+                    if (chance == 1 || chance == 41 || chance == 81 || chance == 121 || chance == 161 || chance == 199)
+                    {
+                        if (Utility.RandomBool() == true) { ingredient = new EssenceBalance(); }
+                        else { ingredient = new EssenceControl(); }
+                    }
+                    else if (this.Fame > 20000 && (Utility.RandomDouble() > 0.95))
+                    {
+                        if (Utility.RandomBool() == true) { ingredient = new EssenceBalance(); }
+                        else { ingredient = new EssenceControl(); }
+                    }
+                }
+                else if (this is Ogre || this is Ettin || this is EvilMage || this is EvilMageLord || this is FrostTroll || this is Ogre || this is Orc || this is OrcBomber || this is OrcishLord || this is OrcishMage || this is Ratman || this is RatmanArcher || this is RatmanMage || this is SavageRider || this is SavageShaman || this is Savage || this is Troll)
+                {
+                    // = 1/66 chance
+                    if (chance == 1 || chance == 81 || chance == 161)
+                    {
+                        if (Utility.RandomBool() == true) { ingredient = new EssenceBalance(); }
+                        else { ingredient = new EssenceControl(); }
+                    }
+                }
+                // = Reptile type [Essence of Precision] or [Essence of Diligence] ==================================
+                else if (this is AncientWyrm || this is GreaterDragon || this is Dragon || this is OphidianMatriarch || this is ShadowWyrm || this is Hiryu || this is JukaLord || this is JukaMage || this is OphidianArchmage || this is OphidianKnight || this is SerpentineDragon || this is WhiteWyrm || this is Yamandon || this is Leviathan)
+                {
+                    // = 1/33 chance
+                    if (chance == 1 || chance == 41 || chance == 81 || chance == 121 || chance == 161 || chance == 199)
+                    {
+                        if (Utility.RandomBool() == true) { ingredient = new EssencePrecision(); }
+                        else { ingredient = new EssenceDiligence(); }
+                    }
+                    else if (this.Fame > 20000 && (Utility.RandomDouble() > 0.95))
+                    {
+                        if (Utility.RandomBool() == true) { ingredient = new EssencePrecision(); }
+                        else { ingredient = new EssenceDiligence(); }
+                    }
+                }
+                else if (this is DeepSeaSerpent || this is Drake || this is IceSerpent || this is GiantSerpent || this is JukaWarrior || this is LavaSerpent || this is LesserHiryu || this is Lizardman || this is OphidianWarrior || this is SeaSerpent || this is SilverSerpent || this is Wyvern || this is Kraken || this is StoneHarpy)
+                {
+                    // = 1/66 chance
+                    if (chance == 1 || chance == 81 || chance == 161)
+                    {
+                        if (Utility.RandomBool() == true) { ingredient = new EssencePrecision(); }
+                        else { ingredient = new EssenceDiligence(); }
+                    }
+                }
+                // = Other types [Essence of Feeling] or [Essence of Singularity] ==================================
+                else if (this.Fame >= 8000)
+                {
+                    // = 1/33 chance
+                    if (chance == 1 || chance == 41 || chance == 81 || chance == 121 || chance == 161 || chance == 199)
+                    {
+                        if (Utility.RandomBool() == true) { ingredient = new EssenceFeeling(); }
+                        else { ingredient = new EssenceSingularity(); }
+                    }
+                    else if (this.Fame > 20000 && (Utility.RandomDouble() > 0.95))
+                    {
+                        if (Utility.RandomBool() == true) { ingredient = new EssenceFeeling(); }
+                        else { ingredient = new EssenceSingularity(); }
+                    }
+                }
+                else if (this.Fame >= 1000 && this.Fame < 8000)
+                {
+                    // = 1/66 chance
+                    if (chance == 1 || chance == 81 || chance == 161)
+                    {
+                        if (Utility.RandomBool() == true) { ingredient = new EssenceFeeling(); }
+                        else { ingredient = new EssenceSingularity(); }
+                    }
+                }
+
+                // ==== Add Ingredient to Creatures Pack
+                if ( ingredient != null )
+                    this.PackItem(ingredient);
+            }
+            #endregion
+
 
 			if (IsAnimatedDead)
 			{

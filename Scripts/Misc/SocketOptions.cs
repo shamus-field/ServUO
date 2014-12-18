@@ -9,7 +9,7 @@ namespace Server
     {
         private static readonly IPEndPoint[] m_ListenerEndPoints = new IPEndPoint[]
         {
-            new IPEndPoint(IPAddress.Any, 2593), // Default: Listen on port 2593 on all IP addresses
+            new IPEndPoint(IPAddress.Any, 2592), // Default: Listen on port 2593 on all IP addresses
  			
             // Examples:
             // new IPEndPoint( IPAddress.Any, 80 ), // Listen on port 80 on all IP addresses

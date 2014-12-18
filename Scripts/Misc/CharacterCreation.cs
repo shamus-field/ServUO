@@ -677,6 +677,8 @@ namespace Server.Misc
             newChar.Hue = newChar.Race.ClipSkinHue(args.Hue & 0x3FFF) | 0x8000;
 
             newChar.Hunger = 20;
+            newChar.Skills.Cap = 12000;
+            newChar.StatCap = 350;
 
             bool young = false;
 
@@ -750,6 +752,7 @@ namespace Server.Misc
         {
             if (Core.ML)
             {
+                //return new CityInfo("Britain", "Center", 1475, 1645, 20, Map.Trammel);
                 //if( args.State != null && args.State.NewHaven )
                 return m_NewHavenInfo;	//We don't get the client Version until AFTER Character creation
                 //return args.City;  TODO: Uncomment when the old quest system is actually phased out

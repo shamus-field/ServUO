@@ -61,8 +61,8 @@ namespace Server.Items
         private bool m_Identified, m_PlayerConstructed;
         private int m_PhysicalBonus, m_FireBonus, m_ColdBonus, m_PoisonBonus, m_EnergyBonus;
 
-	  #region SF Imbuing
-	  private int m_TimesImbued;
+	    #region SF Imbuing
+	    private int m_TimesImbued;
 
         private bool m_Physical_Modded;
         private bool m_Fire_Modded;
@@ -412,7 +412,7 @@ namespace Server.Items
             }
         }
 
-	   #region SF Imbuing
+	    #region SF Imbuing
         [CommandProperty(AccessLevel.GameMaster)]
         public int TimesImbued { get { return m_TimesImbued; } set { m_TimesImbued = value; InvalidateProperties(); } }
 
@@ -1330,8 +1330,8 @@ namespace Server.Items
 
             writer.Write((int)9); // version
 
-		 // Version 9
-		 #region SF Imbuing
+		    // Version 9
+		    #region SF Imbuing
             writer.Write((bool)Physical_Modded);
             writer.Write((bool)Fire_Modded);
             writer.Write((bool)Cold_Modded);
@@ -1507,20 +1507,18 @@ namespace Server.Items
 
             switch ( version )
             {
-			case 9:
-				{
-				  #region SF Imbuing
+                case 9:
+                    {
+				        #region SF Imbuing
                         Physical_Modded = reader.ReadBool();
                         Fire_Modded = reader.ReadBool();
                         Cold_Modded = reader.ReadBool();
                         Poison_Modded = reader.ReadBool();
                         Energy_Modded = reader.ReadBool();
-				   #endregion
+				        #endregion
 
                         goto case 8;
                     }
-               
-
                 case 8:
                     {
                         this.m_TimesImbued = reader.ReadInt();
@@ -2312,7 +2310,7 @@ namespace Server.Items
         {
             base.GetProperties(list);
 
-	      #region SF Imbuing
+	        #region SF Imbuing
             if (m_TimesImbued > 0)
                 list.Add(1080418); // (Imbued)
 

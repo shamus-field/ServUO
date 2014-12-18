@@ -38,7 +38,7 @@ namespace Server.Items
                 // = [SF Imbuing] - Examine Item to show Intesity and Unravelling Ingredient =
                 if (Core.AOS)
                 {
-                    int oInt = 0; int oMods = 0;
+                    int oInt = 0;
                     double oDo = 0;
 
                     Item m_obj = o as Item;

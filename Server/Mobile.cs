@@ -3067,8 +3067,8 @@ namespace Server
 		private static readonly Packet[][] m_MovingPacketCache = new Packet[2][] {new Packet[8], new Packet[8]};
 
 		private bool m_Pushing;
-        private bool m_IgnoreMobiles;
-        private bool m_IsStealthing;
+        public bool m_IgnoreMobiles;
+        public bool m_IsStealthing;
 
 		public bool Pushing { get { return m_Pushing; } set { m_Pushing = value; } }
 

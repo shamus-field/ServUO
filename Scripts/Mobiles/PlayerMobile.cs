@@ -2684,6 +2684,8 @@ namespace Server.Mobiles
 
 		private bool CheckInsuranceOnDeath(Item item)
 		{
+            if (Young) { return false; }
+        
 			if (InsuranceEnabled && item.Insured)
 			{
 				if (XmlPoints.InsuranceIsFree(this, m_InsuranceAward))

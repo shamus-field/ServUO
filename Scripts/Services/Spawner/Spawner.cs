@@ -15,14 +15,14 @@ namespace Server.Mobiles
         private int m_Team;
         private int m_HomeRange;
         private int m_WalkingRange;
-        private int m_Count;
-        private TimeSpan m_MinDelay;
-        private TimeSpan m_MaxDelay;
-        private List<string> m_SpawnNames;
+        public int m_Count;
+        public TimeSpan m_MinDelay;
+        public TimeSpan m_MaxDelay;
+        public List<string> m_SpawnNames;
         private List<ISpawnable> m_Spawned;
         private DateTime m_End;
         private InternalTimer m_Timer;
-        private bool m_Running;
+        public bool m_Running;
         private bool m_Group;
         private WayPoint m_WayPoint;
         [Constructable]

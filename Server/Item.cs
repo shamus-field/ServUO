@@ -754,6 +754,25 @@ namespace Server
 		private DateTime m_LastMovedTime;
 		private Direction m_Direction;
 		#endregion
+		
+		#region  High Seas Baiting :
+		private bool m_Baited;
+		[CommandProperty(AccessLevel.GameMaster)]
+        public bool Baited
+        {
+            get{return this.m_Baited;}
+            set{this.m_Baited = value;
+                this.InvalidateProperties();}
+        }
+		private string m_BaitedMob;
+		[CommandProperty(AccessLevel.GameMaster)]
+		public string BaitedMob
+        {
+            get{return this.m_BaitedMob;}
+            set{this.m_BaitedMob = value;
+                this.InvalidateProperties();}
+        }
+		#endregion	
 
 		private ItemDelta m_DeltaFlags;
 		private ImplFlag m_Flags;
@@ -2418,7 +2437,12 @@ namespace Server
 			HeldBy = 0x00800000,
 			IntWeight = 0x01000000,
 			SavedFlags = 0x02000000,
-			NullWeight = 0x04000000
+			NullWeight = 0x04000000,
+			
+			#region High Seas Baiting Save Flags :
+			Baited = 0x08000000,
+			BaitedMob = 0x10000000
+			#endregion
 		}
 
 		private static void SetSaveFlag(ref SaveFlag flags, SaveFlag toSet, bool setIf)
@@ -2501,6 +2525,18 @@ namespace Server
 			{
 				flags |= SaveFlag.Amount;
 			}
+			
+			#region High Seas Serialize :
+			if(m_Baited != false)
+			{
+				flags |= SaveFlag.Baited;
+			}
+			if(m_BaitedMob != null)
+			{
+				flags |= SaveFlag.BaitedMob;
+			}
+			#endregion
+			
 			if (m_Layer != Layer.Invalid)
 			{
 				flags |= SaveFlag.Layer;
@@ -2660,6 +2696,18 @@ namespace Server
 			{
 				writer.WriteEncodedInt(m_Amount);
 			}
+			
+			#region High Seas Baiting GetSaveFlag :
+			if(GetSaveFlag(flags, SaveFlag.Baited))
+			{
+				writer.Write(m_Baited);
+			}
+			
+			if(GetSaveFlag(flags, SaveFlag.BaitedMob))
+			{
+				writer.Write(m_BaitedMob);
+			}
+			#endregion
 
 			if (GetSaveFlag(flags, SaveFlag.Layer))
 			{
@@ -2984,6 +3032,17 @@ namespace Server
 						{
 							m_Amount = 1;
 						}
+						
+						#region High Seas Deserialize :
+						if(GetSaveFlag(flags, SaveFlag.Baited))
+						{
+							m_Baited = reader.ReadBool();
+						}
+						if(GetSaveFlag(flags, SaveFlag.BaitedMob))
+						{
+							m_BaitedMob = reader.ReadString();
+						}
+						#endregion
 
 						if (GetSaveFlag(flags, SaveFlag.Layer))
 						{
@@ -3173,6 +3232,17 @@ namespace Server
 						{
 							m_Amount = 1;
 						}
+						
+						#region High Seas Deserialize :
+						if(GetSaveFlag(flags, SaveFlag.Baited))
+						{
+							m_Baited = reader.ReadBool();
+						}
+						if(GetSaveFlag(flags, SaveFlag.BaitedMob))
+						{
+							m_BaitedMob = reader.ReadString();
+						}
+						#endregion
 
 						if (GetSaveFlag(flags, SaveFlag.Layer))
 						{
@@ -3315,6 +3385,12 @@ namespace Server
 						m_ItemID = reader.ReadInt();
 						m_Hue = reader.ReadInt();
 						m_Amount = reader.ReadInt();
+						
+						#region High Seas Baiting :
+						m_Baited = reader.ReadBool();
+						m_BaitedMob = reader.ReadString();
+						#endregion
+						
 						m_Layer = (Layer)reader.ReadByte();
 
 						string name = reader.ReadString();

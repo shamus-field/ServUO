@@ -361,6 +361,17 @@ namespace Server.Engines.Craft
                 this.SetNeededExpansion(index, Expansion.SA);
             }
             #endregion
+			
+			#region High Seas
+			if (Core.HS)
+			{
+				// Fish Oil Flask ( Oléo de peixe )
+				index = this.AddCraft(typeof(FishOil), 1044496, 1150863, 60.0, 120.0, typeof(BaseBeverage), 1046458, 1, 1044253);
+                this.AddRes(index, typeof(RawFishSteak), 1044476, 8, 1044253);
+				this.AddRes(index, typeof(SackFlour), 1044468, 1, 1044253);
+				this.SetNeededExpansion(index, Expansion.HS);
+			}
+			#endregion
         }
     }
 }

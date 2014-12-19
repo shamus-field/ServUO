@@ -215,10 +215,10 @@ namespace Server.Items
 
         protected virtual int GetSpawnCount()
         {
-            int count = Utility.RandomMinMax(1, 3);
+            int count = Utility.RandomMinMax(1, 1);
 
             if (this.Hue != 0x8A0)
-                count += Utility.RandomMinMax(1, 2);
+                count += Utility.RandomMinMax(1, 1);
 
             return count;
         }
@@ -256,36 +256,32 @@ namespace Server.Items
 
         protected virtual void FinishEffect(Point3D p, Map map, Mobile from)
         {
-            from.RevealingAction();
+            int chance = Utility.Random(5);
 
-            int count = this.GetSpawnCount();
-
-            for (int i = 0; map != null && i < count; ++i)
+            BaseCreature spawn;
+            
+            switch ( chance )
             {
-                BaseCreature spawn;
-
-                switch ( Utility.Random(4) )
-                {
-                    default:
-                    case 0:
-                        spawn = new SeaSerpent();
-                        break;
-                    case 1:
-                        spawn = new DeepSeaSerpent();
-                        break;
-                    case 2:
-                        spawn = new WaterElemental();
-                        break;
-                    case 3:
-                        spawn = new Kraken();
-                        break;
-                }
-
-                this.Spawn(p, map, spawn);
-
-                spawn.Combatant = from;
+                default:
+                case 0:
+                    spawn = new SeaSerpent();
+                    break;
+                case 1:
+                    spawn = new DeepSeaSerpent();
+                    break;
+                case 2:
+                    spawn = new WaterElemental();
+                    break;
+                case 3:
+                    spawn = new Kraken();
+                    break;
+                case 4:
+                    spawn = new Scalis();
+                    break;
             }
 
+            this.Spawn(p, map, spawn);
+            spawn.Combatant = from;
             this.Delete();
         }
 
@@ -451,8 +447,6 @@ namespace Server.Items
 
         protected override void FinishEffect(Point3D p, Map map, Mobile from)
         {
-            this.Spawn(p, map, new Leviathan(from));
-
             base.FinishEffect(p, map, from);
         }
     }

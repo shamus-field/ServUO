@@ -99,8 +99,7 @@ namespace Server.Engines.Harvest
                 fish.BonusResources = new BonusHarvestResource[]
                 {
                     new BonusHarvestResource(0, 99.4, null, null), //set to same chance as mining ml gems
-                    new BonusHarvestResource(80.0, .6, 1072597, typeof(WhitePearl)),
-                    new BonusHarvestResource(80.0, .4, "You have fished up a pair of delicate scales!", typeof(DelicateScales))
+                    new BonusHarvestResource(80.0, .6, 1072597, typeof(WhitePearl))
                 };
             }
 
@@ -359,17 +358,6 @@ namespace Server.Engines.Harvest
                             chest.DropItem(new FabledFishingNet());
                         else
                             chest.DropItem(new SpecialFishingNet());
-                            
-                        if (0.02 >= Utility.RandomDouble()) //2% chance
-                        {
-                            switch (Utility.Random(3))
-                            {
-                                case 0 : chest.DropItem(new BronzedArmorValkyrie()); break;
-                                case 1 : chest.DropItem(new EnchantedKelpWovenLeggings()); break;
-                                case 2 : chest.DropItem(new RunedDriftwoodBow()); break;
-                                case 3 : chest.DropItem(new AntiqueWeddingDress()); break;
-                            }
-                        }
 
                         chest.Movable = true;
                         chest.Locked = false;
@@ -529,21 +517,67 @@ namespace Server.Engines.Harvest
         public override void OnHarvestFinished(Mobile from, Item tool, HarvestDefinition def, HarvestVein vein, HarvestBank bank, HarvestResource resource, object harvested)
         {
             base.OnHarvestFinished(from, tool, def, vein, bank, resource, harvested);
-
-            if (Core.ML)
+			
+            if (Core.ML){
                 from.RevealingAction();
+				// High Seas Charybids Bait Method calling when the you finish fishing.
+				OnCharybidsBait(from, tool.Baited, tool.BaitedMob);}
         }
 
         public override object GetLock(Mobile from, Item tool, HarvestDefinition def, object toHarvest)
         {
             return this;
         }
+		
+		#region High Seas Baiting
+		public void OnCharybidsBait(Mobile from, bool Baited, string BaitedMob)
+		{
+			int Chance = Utility.Random(100); // 25% chance to spawn Charybids
+			int x = from.X, y = from.Y;
+			Map map = from.Map;
+			            
+			if (Baited == true && BaitedMob == "Charybids")
+            {
+				if(Chance >= 75 && from.Skills.Fishing.Value >= 120)
+				{
+					BaseCreature Char = new Charybdis();
 
+					for (int i = 0; map != null && i < 20; ++i)
+					{
+						int tx = from.X - 10 + Utility.Random(21);
+						int ty = from.Y - 10 + Utility.Random(21);
+
+						LandTile t = map.Tiles.GetLandTile(tx, ty);
+
+						if (t.Z == -5 && ((t.ID >= 0xA8 && t.ID <= 0xAB) || (t.ID >= 0x136 && t.ID <= 0x137)) && !Spells.SpellHelper.CheckMulti(new Point3D(tx, ty, -5), map))
+						{
+							x = tx;
+							y = ty;
+							break;
+						}
+					}
+
+					Char.MoveToWorld(new Point3D(x, y, -5), map);
+
+					Char.Home = Char.Location;
+					Char.RangeHome = 10;
+				}
+				else
+				{
+					from.SendLocalizedMessage(1150858); // You see a few bubbles, but no charybdis.
+					return;
+				}
+			}
+			else
+				return;
+		}
+		#endregion
+		
         public override bool BeginHarvesting(Mobile from, Item tool)
         {
             if (!base.BeginHarvesting(from, tool))
                 return false;
-
+			
             from.SendLocalizedMessage(500974); // What water do you want to fish in?
             return true;
         }

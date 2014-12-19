@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Server.ContextMenus;
+using Server.Items;
+using Server.Network;
 using Server.Engines.Craft;
 
 namespace Server.Items
@@ -482,6 +484,51 @@ namespace Server.Items
             Server.Engines.XmlSpawner2.XmlAttach.CheckOnRemoved(this, parent);
         }
 
+ #region SF Imbuing
+        // ==== Imbued Jewelery takes damage OnHit ====
+        public virtual int OnHit(BaseJewel jewel, int damageTaken)
+        {
+            if (25 > Utility.Random(100) && m_MaxHitPoints > 0) // 25% chance to lower durability
+            {
+                int wear;
+
+                wear = Utility.Random(2);
+
+                if (wear > 0 && m_MaxHitPoints > 0)
+                {
+                    if (m_HitPoints >= wear)
+                    {
+                        HitPoints -= wear;
+                        wear = 0;
+                    }
+                    else
+                    {
+                        wear -= HitPoints;
+                        HitPoints = 0;
+                    }
+
+                    if (wear > 0)
+                    {
+                        if (m_MaxHitPoints > wear)
+                        {
+                            MaxHitPoints -= wear;
+
+                            if (Parent is Mobile)
+                                ((Mobile)Parent).LocalOverheadMessage(MessageType.Regular, 0x3B2, 1061121); // Your equipment is severely damaged.
+                        }
+                        else
+                        {
+                            Delete();
+                        }
+                    }
+                }
+            }
+
+
+            return damageTaken;
+        }
+        #endregion
+
         public BaseJewel(Serial serial)
             : base(serial)
         {
@@ -491,12 +538,18 @@ namespace Server.Items
         {
             base.GetProperties(list);
 
-            #region Imbuing
+            #region SF Imbuing
             if (this.m_TimesImbued > 0)
                 list.Add(1080418); // (Imbued)
+
+		 if (m_AosAttributes.Brittle > 0)
+                list.Add(1116209); // Brittle
+
+            if (m_AosAttributes.NoRepairs > 0)
+                list.Add("Cannot Be Repaired");
             #endregion
 
-            #region Mondain's Legacy
+            #region Mondain's Legacy - SF Imbuing
             if (this.m_Quality == ArmorQuality.Exceptional)
                 list.Add(1063341); // exceptional
 
@@ -516,6 +569,9 @@ namespace Server.Items
                 }
             }
             #endregion
+
+	  
+
 
             this.m_AosSkillBonuses.GetProperties(list);
 

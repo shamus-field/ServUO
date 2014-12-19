@@ -8,7 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using Server;
 using Server.Accounting;
 using Server.ContextMenus;
 using Server.Engines.BulkOrders;
@@ -41,6 +41,7 @@ using Server.Spells.Seventh;
 using Server.Spells.Sixth;
 using Server.Spells.Spellweaving;
 using Server.Targeting;
+using Server.Commands;
 
 using RankDefinition = Server.Guilds.RankDefinition;
 #endregion
@@ -216,6 +217,8 @@ namespace Server.Mobiles
 		private TimeSpan m_NpcGuildGameTime;
 		private PlayerFlag m_Flags;
 		private int m_Profession;
+		private bool m_IsStealthing; // IsStealthing should be moved to Server.Mobiles
+		private bool m_IgnoreMobiles; // IgnoreMobiles should be moved to Server.Mobiles
 
 		private int m_NonAutoreinsuredItems;
 		// number of items that could not be automaitically reinsured because gold in bank was not enough
@@ -287,6 +290,27 @@ namespace Server.Mobiles
 		public int Profession { get { return m_Profession; } set { m_Profession = value; } }
 
 		public int StepsTaken { get; set; }
+
+		[CommandProperty(AccessLevel.GameMaster)]
+		public bool IsStealthing // IsStealthing should be moved to Server.Mobiles
+		{
+			get { return m_IsStealthing; }
+			set { m_IsStealthing = value; }
+		}
+
+		[CommandProperty(AccessLevel.GameMaster)]
+		public bool IgnoreMobiles // IgnoreMobiles should be moved to Server.Mobiles
+		{
+			get { return m_IgnoreMobiles; }
+			set
+			{
+				if (m_IgnoreMobiles != value)
+				{
+					m_IgnoreMobiles = value;
+					Delta(MobileDelta.Flags);
+				}
+			}
+		}
 
 		[CommandProperty(AccessLevel.GameMaster)]
 		public NpcGuild NpcGuild { get { return m_NpcGuild; } set { m_NpcGuild = value; } }
@@ -689,12 +713,22 @@ namespace Server.Mobiles
 		{
 			int flags = base.GetPacketFlags();
 
+			if (m_IgnoreMobiles)
+			{
+				flags |= 0x10;
+			}
+
 			return flags;
 		}
 
 		public override int GetOldPacketFlags()
 		{
 			int flags = base.GetOldPacketFlags();
+
+			if (m_IgnoreMobiles)
+			{
+				flags |= 0x10;
+			}
 
 			return flags;
 		}
@@ -1340,6 +1374,8 @@ namespace Server.Mobiles
 			InvisibilitySpell.RemoveTimer(this);
 
 			base.RevealingAction();
+
+			m_IsStealthing = false; // IsStealthing should be moved to Server.Mobiles
 		}
 
 		public override void OnHiddenChanged()
@@ -1681,7 +1717,7 @@ namespace Server.Mobiles
 						#region Mondain's Legacy
 						AnimalFormContext context = AnimalForm.GetContext(this);
 
-						if (skill == SkillName.Stealing && context.StealingMod != null && context.StealingMod.Value > 0)
+						if (skill == SkillName.Stealing && context.StealingMod.Value > 0)
 						{
 							continue;
 						}
@@ -2409,7 +2445,7 @@ namespace Server.Mobiles
 
 		public override bool CheckShove(Mobile shoved)
 		{
-			if (TransformationSpellHelper.UnderTransformation(shoved, typeof(WraithFormSpell)))
+			if (m_IgnoreMobiles || TransformationSpellHelper.UnderTransformation(shoved, typeof(WraithFormSpell)))
 			{
 				return true;
 			}
@@ -2649,7 +2685,7 @@ namespace Server.Mobiles
 		private bool CheckInsuranceOnDeath(Item item)
 		{
             if (Young) { return false; }
-
+        
 			if (InsuranceEnabled && item.Insured)
 			{
 				if (XmlPoints.InsuranceIsFree(this, m_InsuranceAward))
@@ -2951,6 +2987,22 @@ namespace Server.Mobiles
 		private DateTime m_NextTailorBulkOrder;
 		private DateTime m_SavagePaintExpiration;
 		private SkillName m_Learning = (SkillName)(-1);
+
+	  #region SF Imbuing
+        private object m_Imbue_Item;
+        private int m_Imbue_Iref, m_Imbue_Mod, m_Imbue_ModInt, m_Imbue_ModVal;
+        private int m_Imbue_IWmax, m_Imb_SFBonus, m_ImbMenu_Cat, m_ImbMenu_ModInc;
+
+        public object Imbue_Item { get { return m_Imbue_Item; } set { m_Imbue_Item = value; InvalidateProperties(); }}        
+        public int Imbue_Mod { get { return m_Imbue_Mod; } set { m_Imbue_Mod = value; InvalidateProperties(); }}       
+        public int Imbue_ModInt { get { return m_Imbue_ModInt; } set { m_Imbue_ModInt = value; InvalidateProperties(); }}        
+        public int Imbue_ModVal { get { return m_Imbue_ModVal; } set { m_Imbue_ModVal = value; InvalidateProperties(); }}        
+        public int Imbue_SFBonus { get { return m_Imb_SFBonus; } set { m_Imb_SFBonus = value; InvalidateProperties(); }} 
+        public int ImbMenu_Cat { get { return m_ImbMenu_Cat; } set { m_ImbMenu_Cat = value; InvalidateProperties(); }}
+        public int ImbMenu_ModInc { get { return m_ImbMenu_ModInc; } set { m_ImbMenu_ModInc = value; InvalidateProperties(); }}        
+        public int Imbue_IWmax { get { return m_Imbue_IWmax; } set { m_Imbue_IWmax = value; InvalidateProperties(); } }
+        #endregion
+
 
 		public SkillName Learning { get { return m_Learning; } set { m_Learning = value; } }
 
@@ -3712,6 +3764,11 @@ namespace Server.Mobiles
 			if (m_ChampionTitles == null)
 			{
 				m_ChampionTitles = new ChampionTitleInfo();
+			}
+
+			if (IsPlayer())
+			{
+				m_IgnoreMobiles = true;
 			}
 
 			var list = Stabled;

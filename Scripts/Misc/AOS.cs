@@ -1,4 +1,8 @@
 using System;
+using Server;
+using Server.Misc;
+using Server.Network;
+using System.Collections;
 using System.Collections.Generic;
 using Server.Engines.XmlSpawner2;
 using Server.Items;
@@ -376,6 +380,12 @@ namespace Server
         Luck = 0x00100000,
         SpellChanneling = 0x00200000,
         NightSight = 0x00400000,
+
+ 	  #region SF Imbuing
+        Brittle = 0x02000000,
+        NoRepairs = 0x04000000,
+        #endregion
+
         IncreasedKarmaLoss = 0x00800000
     }
 
@@ -868,6 +878,15 @@ namespace Server
                 this[AosAttribute.NightSight] = value;
             }
         }
+
+	   #region SF Imbuing
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int Brittle { get { return this[AosAttribute.Brittle]; } set { this[AosAttribute.Brittle] = value; } }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int NoRepairs { get { return this[AosAttribute.NoRepairs]; } set { this[AosAttribute.NoRepairs] = value; } }
+        #endregion
+
 
         [CommandProperty(AccessLevel.GameMaster)]
         public int IncreasedKarmaLoss

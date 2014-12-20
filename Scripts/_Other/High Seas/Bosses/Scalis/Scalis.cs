@@ -32,7 +32,7 @@ namespace Server.Mobiles
 		}
 
 		[Constructable]
-		public Scalis( Mobile fisher ) : base( Utility.RandomBool() ? AIType.ScalisAI : AIType.AI_Mage, FightMode.Closest, 10, 1, 0.2, 0.4 )
+		public Scalis( Mobile fisher ) : base( Utility.RandomBool() ? AIType.AI_ScalisAI : AIType.AI_Mage, FightMode.Closest, 10, 1, 0.2, 0.4 )
 		{
 			m_Fisher = fisher;
 

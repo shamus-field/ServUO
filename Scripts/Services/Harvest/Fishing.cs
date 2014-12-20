@@ -520,8 +520,6 @@ namespace Server.Engines.Harvest
                     {
                         if (Core.ML)
                             from.RevealingAction();
-                            // High Seas Charybids Bait Method calling when the you finish fishing.
-				            OnCharybidsBait(from, tool.Baited, tool.BaitedMob);}
 
                         Effects.SendLocationEffect(loc, map, 0x352D, 16, 4);
                         Effects.PlaySound(loc, map, 0x364);
@@ -531,9 +529,11 @@ namespace Server.Engines.Harvest
         public override void OnHarvestFinished(Mobile from, Item tool, HarvestDefinition def, HarvestVein vein, HarvestBank bank, HarvestResource resource, object harvested)
         {
             base.OnHarvestFinished(from, tool, def, vein, bank, resource, harvested);
-
-            if (Core.ML)
+			
+            if (Core.ML){
                 from.RevealingAction();
+				// High Seas Charybids Bait Method calling when the you finish fishing.
+				OnCharybidsBait(from, tool.Baited, tool.BaitedMob);}
         }
 
         public override object GetLock(Mobile from, Item tool, HarvestDefinition def, object toHarvest)

@@ -20,6 +20,8 @@ using Server.Mobiles;
 using Server.Engines.PartySystem;
 using Server.Engines.XmlSpawner2;
 using Server.Gumps;
+using Server.Network;
+
 
 namespace Server.Commands
 {
@@ -33,7 +35,7 @@ namespace Server.Commands
 			when other players are near.
 			Set to zero to always allow grabbing in proximity of
 			other players.	*/
-		private const  int CompetitiveGrabRadius = 5;
+		private const  int CompetitiveGrabRadius = 0;
 
 		/* allow player corpses to be looted */
 		private const  bool LootPlayers = false;
@@ -76,7 +78,7 @@ namespace Server.Commands
 		[Description( "Grab lootable items off of the ground and claim nearby corpses" )]
 		public static void Grab_OnCommand( CommandEventArgs e )
 		{
-
+            e.Mobile.PublicOverheadMessage(MessageType.Regular, 0, false, "*yoink*");
 			//   Get LootData attachment 
 			LootData lootoptions = new LootData();
 			// does player already have a lootdata attachment?

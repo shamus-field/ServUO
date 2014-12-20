@@ -107,7 +107,7 @@ namespace Server.Items
 		// For Forensics Evaluation
 		public string m_Forensicist; // Name of the first PlayerMobile who used Forensic Evaluation on the corpse
 
-		public static readonly TimeSpan MonsterLootRightSacrifice = TimeSpan.FromMinutes(2.0);
+		public static readonly TimeSpan MonsterLootRightSacrifice = TimeSpan.Zero;
 
 		public static readonly TimeSpan InstancedCorpseTime = TimeSpan.FromMinutes(3.0);
 
@@ -1104,6 +1104,7 @@ namespace Server.Items
 
 		public bool CheckLoot(Mobile from, Item item)
 		{
+            /*
 			if (!CanLoot(from, item))
 			{
 				if (m_Owner == null || !m_Owner.Player)
@@ -1118,6 +1119,19 @@ namespace Server.Items
 				return false;
 			}
 			else if (IsCriminalAction(from))
+			{
+				if (m_Owner == null || !m_Owner.Player)
+				{
+					from.SendLocalizedMessage(1005036); // Looting this monster corpse will be a criminal act!
+				}
+				else
+				{
+					from.SendLocalizedMessage(1005038); // Looting this corpse will be a criminal act!
+				}
+			}
+            */
+            
+            if (IsCriminalAction(from))
 			{
 				if (m_Owner == null || !m_Owner.Player)
 				{

@@ -42,7 +42,7 @@ namespace Server.Spells.Chivalry
         {
             get
             {
-                return 30;
+                return 0;
             }
         }
         public override int MantraNumber

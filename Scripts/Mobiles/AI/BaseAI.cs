@@ -43,6 +43,7 @@ namespace Server.Mobiles
 		AI_Thief,
 		AI_NecroMage,
 		AI_OrcScout,
+        AI_ScalisAI,
     // >>> [1st change of 12]
         AI_Ninja, 
     // end 1st

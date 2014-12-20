@@ -104,8 +104,8 @@ namespace Server.Items
             if (y1 < 0)
                 y1 = 0;
 
-            if (x2 >= 5120)
-                x2 = 5119;
+            if (x2 >= 6592)
+                x2 = 6591;
 
             if (y2 >= 4096)
                 y2 = 4095;

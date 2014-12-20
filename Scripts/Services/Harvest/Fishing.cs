@@ -520,6 +520,8 @@ namespace Server.Engines.Harvest
                     {
                         if (Core.ML)
                             from.RevealingAction();
+                            // High Seas Charybids Bait Method calling when the you finish fishing.
+				            OnCharybidsBait(from, tool.Baited, tool.BaitedMob);}
 
                         Effects.SendLocationEffect(loc, map, 0x352D, 16, 4);
                         Effects.PlaySound(loc, map, 0x364);
@@ -538,6 +540,50 @@ namespace Server.Engines.Harvest
         {
             return this;
         }
+        
+        #region High Seas Baiting
+		public void OnCharybidsBait(Mobile from, bool Baited, string BaitedMob)
+		{
+			int Chance = Utility.Random(100); // 25% chance to spawn Charybids
+			int x = from.X, y = from.Y;
+			Map map = from.Map;
+			            
+			if (Baited == true && BaitedMob == "Charybids")
+            {
+				if(Chance >= 75 && from.Skills.Fishing.Value >= 120)
+				{
+					BaseCreature Char = new Charybdis();
+
+					for (int i = 0; map != null && i < 20; ++i)
+					{
+						int tx = from.X - 10 + Utility.Random(21);
+						int ty = from.Y - 10 + Utility.Random(21);
+
+						LandTile t = map.Tiles.GetLandTile(tx, ty);
+
+						if (t.Z == -5 && ((t.ID >= 0xA8 && t.ID <= 0xAB) || (t.ID >= 0x136 && t.ID <= 0x137)) && !Spells.SpellHelper.CheckMulti(new Point3D(tx, ty, -5), map))
+						{
+							x = tx;
+							y = ty;
+							break;
+						}
+					}
+
+					Char.MoveToWorld(new Point3D(x, y, -5), map);
+
+					Char.Home = Char.Location;
+					Char.RangeHome = 10;
+				}
+				else
+				{
+					from.SendLocalizedMessage(1150858); // You see a few bubbles, but no charybdis.
+					return;
+				}
+			}
+			else
+				return;
+		}
+		#endregion
 
         public override bool BeginHarvesting(Mobile from, Item tool)
         {

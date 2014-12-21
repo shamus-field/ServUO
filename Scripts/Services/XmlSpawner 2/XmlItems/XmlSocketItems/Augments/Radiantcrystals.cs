@@ -25,7 +25,7 @@ namespace Server.Items
         {
             get
             {
-                return 4;
+                return 1;
             }
         }
         public override int IconXOffset
@@ -146,7 +146,7 @@ namespace Server.Items
         {
             get
             {
-                return 4;
+                return 1;
             }
         }
         public override int IconXOffset
@@ -267,7 +267,7 @@ namespace Server.Items
         {
             get
             {
-                return 4;
+                return 1;
             }
         }
         public override int IconXOffset
@@ -388,7 +388,7 @@ namespace Server.Items
         {
             get
             {
-                return 4;
+                return 1;
             }
         }
         public override int IconXOffset
@@ -509,7 +509,7 @@ namespace Server.Items
         {
             get
             {
-                return 4;
+                return 1;
             }
         }
         public override int IconXOffset
@@ -622,7 +622,7 @@ namespace Server.Items
         {
             get
             {
-                return 4;
+                return 1;
             }
         }
         public override int IconXOffset
@@ -743,7 +743,7 @@ namespace Server.Items
         {
             get
             {
-                return 4;
+                return 1;
             }
         }
         public override int IconXOffset
@@ -864,7 +864,7 @@ namespace Server.Items
         {
             get
             {
-                return 4;
+                return 1;
             }
         }
         public override int IconXOffset
@@ -985,7 +985,7 @@ namespace Server.Items
         {
             get
             {
-                return 4;
+                return 1;
             }
         }
         public override int IconXOffset
@@ -1106,7 +1106,7 @@ namespace Server.Items
         {
             get
             {
-                return 4;
+                return 1;
             }
         }
         public override int IconXOffset
@@ -1227,7 +1227,7 @@ namespace Server.Items
         {
             get
             {
-                return 4;
+                return 1;
             }
         }
         public override int IconXOffset
@@ -1348,7 +1348,7 @@ namespace Server.Items
         {
             get
             {
-                return 4;
+                return 1;
             }
         }
         public override int IconXOffset
@@ -1469,7 +1469,7 @@ namespace Server.Items
         {
             get
             {
-                return 4;
+                return 1;
             }
         }
         public override int IconXOffset
@@ -1590,7 +1590,7 @@ namespace Server.Items
         {
             get
             {
-                return 4;
+                return 1;
             }
         }
         public override int IconXOffset

@@ -7,7 +7,7 @@ namespace Server.Items
     {
         [Constructable]
         public GlimmeringGranite()
-            : base(0x1779)
+            : base(0x1777)
         {
             this.Name = "Glimmering Granite";
             this.Hue = 15;
@@ -100,7 +100,7 @@ namespace Server.Items
     {
         [Constructable]
         public GlimmeringClay()
-            : base(0x1779)
+            : base(0x1777)
         {
             this.Name = "Glimmering Clay";
             this.Hue = 25;
@@ -193,7 +193,7 @@ namespace Server.Items
     {
         [Constructable]
         public GlimmeringHeartstone()
-            : base(0x1779)
+            : base(0x1777)
         {
             this.Name = "Glimmering Heartstone";
             this.Hue = 35;
@@ -286,7 +286,7 @@ namespace Server.Items
     {
         [Constructable]
         public GlimmeringGypsum()
-            : base(0x1779)
+            : base(0x1777)
         {
             this.Name = "Glimmering Gypsum";
             this.Hue = 45;
@@ -379,7 +379,7 @@ namespace Server.Items
     {
         [Constructable]
         public GlimmeringIronOre()
-            : base(0x1779)
+            : base(0x1777)
         {
             this.Name = "Glimmering Iron Ore";
             this.Hue = 55;
@@ -472,7 +472,7 @@ namespace Server.Items
     {
         [Constructable]
         public GlimmeringOnyx()
-            : base(0x1779)
+            : base(0x1777)
         {
             this.Name = "Glimmering Onyx";
             this.Hue = 2;
@@ -565,7 +565,7 @@ namespace Server.Items
     {
         [Constructable]
         public GlimmeringMarble()
-            : base(0x1779)
+            : base(0x1777)
         {
             this.Name = "Glimmering Marble";
             this.Hue = 85;
@@ -658,7 +658,7 @@ namespace Server.Items
     {
         [Constructable]
         public GlimmeringPetrifiedWood()
-            : base(0x1779)
+            : base(0x1777)
         {
             this.Name = "Glimmering Petrified wood";
             this.Hue = 85;
@@ -751,7 +751,7 @@ namespace Server.Items
     {
         [Constructable]
         public GlimmeringLimestone()
-            : base(0x1779)
+            : base(0x1777)
         {
             this.Name = "Glimmering Limestone";
             this.Hue = 85;
@@ -844,7 +844,7 @@ namespace Server.Items
     {
         [Constructable]
         public GlimmeringBloodrock()
-            : base(0x1779)
+            : base(0x1777)
         {
             this.Name = "Glimmering Bloodrock";
             this.Hue = 85;

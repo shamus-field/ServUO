@@ -134,6 +134,8 @@ namespace Server.Items
                     {
                         from.LocalOverheadMessage(MessageType.Regular, 2304, false, "You conclude that item cannot be magically unraveled.");
                     }
+                    
+                    Server.Engines.XmlSpawner2.XmlAttach.RevealAttachments(from, o);
                 }
                 // ===== Pre-AOS ItemID =====
                 else
@@ -164,7 +166,7 @@ namespace Server.Items
                         from.SendLocalizedMessage(500353); // You are not certain...
                     }
 
-Server.Engines.XmlSpawner2.XmlAttach.RevealAttachments(from, o);
+                    Server.Engines.XmlSpawner2.XmlAttach.RevealAttachments(from, o);
                 }
 			}
 		}

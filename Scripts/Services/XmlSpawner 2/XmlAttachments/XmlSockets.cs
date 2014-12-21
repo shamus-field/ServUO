@@ -15,7 +15,7 @@ namespace Server.Engines.XmlSpawner2
         // if CanSocketByDefault is set to true, then any object can be socketed using the default settings.  If the XmlSocketable attachment is present, it
         // will override these defaults regardless of the CanSocketByDefault setting.  
         // If this is set to false, then ONLY objects with the XmlSocketable attachment can be socketed.
-        public static bool CanSocketByDefault = false;
+        public static bool CanSocketByDefault = true;
         // The following default settings will be applied when CanSocketByDefault is true
         //
         // DefaultMaxSockets determines the default maximum number of sockets and item can have.
@@ -23,15 +23,15 @@ namespace Server.Engines.XmlSpawner2
         // To set it up so that items by default cannot have sockets added to them set this to zero.  
         // That way, only items that have the XmlSocketLimit attachment will be allowed to be socketed.  This is the same as setting CanSocketByDefault to false.
         // You can also assign any other value here to set the default number of sockets allowed when no XmlSocketLimit attachment is present.
-        public static int DefaultMaxSockets = -1;
+        public static int DefaultMaxSockets = 2;
         // DefaultSocketDifficulty is the default minimum skill required to socket.
         // This can be overridden with the XmlSocketLimit attachment on specific items (100 by default)
         public static double DefaultSocketDifficulty = 100.0;
         public static SkillName DefaultSocketSkill = SkillName.Blacksmith;
         public static Type DefaultSocketResource = typeof(ValoriteIngot);
-        public static int DefaultSocketResourceQuantity = 50;
+        public static int DefaultSocketResourceQuantity = 100;
         // DefaultDestructionProbability is the percent chance that failure to socket will result in destruction of the the item (10% by default)
-        public static double DefaultDestructionProbability = 0.1;
+        public static double DefaultDestructionProbability = 0.01;
         public static int MaxAugmentDistance = 2;// if socketed object isnt in pack, then this is the max distance away from it you can be and still augment
         public static int MaxSocketDistance = 2;// if socketable object isnt in pack, then this is the max distance away from it you can be and still socket
         private ArrayList m_SocketOccupants;
@@ -188,11 +188,11 @@ namespace Server.Engines.XmlSpawner2
                 int level = Utility.Random(1000);
 
                 if (level < (int)(chance5 * 10))
-                    XmlAttach.AttachTo(target, new XmlSockets(5));
+                    XmlAttach.AttachTo(target, new XmlSockets(2));
                 else if (level < (int)(chance4 + chance5) * 10)
-                    XmlAttach.AttachTo(target, new XmlSockets(4));
+                    XmlAttach.AttachTo(target, new XmlSockets(2));
                 else if (level < (int)(chance3 + chance4) * 10)
-                    XmlAttach.AttachTo(target, new XmlSockets(3));
+                    XmlAttach.AttachTo(target, new XmlSockets(2));
                 else if (level < (int)(chance2 + chance3) * 10)
                     XmlAttach.AttachTo(target, new XmlSockets(2));
                 else if (level < (int)(chance1 + chance2) * 10)
@@ -202,11 +202,11 @@ namespace Server.Engines.XmlSpawner2
                 int socklevel = Utility.Random(1000);
                 
                 if (socklevel < (int)(chance5 * 10))
-                    XmlAttach.AttachTo(target, new XmlSocketable(5, skillname, minskill, skillname2, minskill2, resource, quantity));
+                    XmlAttach.AttachTo(target, new XmlSocketable(2, skillname, minskill, skillname2, minskill2, resource, quantity));
                 else if (socklevel < (int)(chance4 + chance5) * 10)
-                    XmlAttach.AttachTo(target, new XmlSocketable(4, skillname, minskill, skillname2, minskill2, resource, quantity));
+                    XmlAttach.AttachTo(target, new XmlSocketable(2, skillname, minskill, skillname2, minskill2, resource, quantity));
                 else if (socklevel < (int)(chance3 + chance4) * 10)
-                    XmlAttach.AttachTo(target, new XmlSocketable(3, skillname, minskill, skillname2, minskill2, resource, quantity));
+                    XmlAttach.AttachTo(target, new XmlSocketable(2, skillname, minskill, skillname2, minskill2, resource, quantity));
                 else if (socklevel < (int)(chance2 + chance3) * 10)
                     XmlAttach.AttachTo(target, new XmlSocketable(2, skillname, minskill, skillname2, minskill2, resource, quantity));
                 else

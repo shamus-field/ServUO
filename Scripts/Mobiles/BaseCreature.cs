@@ -4835,6 +4835,170 @@ namespace Server.Mobiles
 
 		public virtual bool IgnoreYoungProtection { get { return false; } }
 
+        public Item LowAugment()
+        {
+            switch ( Utility.Random(18) )
+            {
+                default:
+                case 0:
+                    return new AncientAmethyst();
+                case 1:
+                    return new AncientDiamond();
+                case 2:
+                    return new AncientEmerald();
+                case 3:
+                    return new AncientRuby();
+                case 4:
+                    return new AncientSapphire();
+                case 5: 
+                    return new AncientTourmaline();
+                case 6:
+                    return new AncientSkull();
+                case 7:
+                    return new AncientWood();
+                case 8:
+                    return new GlimmeringGranite();
+                case 9:
+                    return new GlimmeringClay();
+                case 10:
+                    return new GlimmeringHeartstone();
+                case 11:
+                    return new GlimmeringGypsum();
+                case 12:
+                    return new GlimmeringIronOre();
+                case 13:
+                    return new GlimmeringOnyx();
+                case 14:
+                    return new GlimmeringMarble();
+                case 15:
+                    return new GlimmeringPetrifiedWood();
+                case 16:
+                    return new GlimmeringLimestone();
+                case 17:
+                    return new GlimmeringBloodrock();
+            }
+        }
+        
+        public Item MidAugment()
+        {
+            switch ( Utility.Random(2) )
+            {
+                default:
+                case 0:
+                    return new LegendaryAmethyst();
+                case 1:
+                    return new LegendaryDiamond();
+                case 2:
+                    return new LegendaryEmerald();
+                case 3:
+                    return new LegendaryRuby();
+                case 4:
+                    return new LegendarySapphire();
+                case 5: 
+                    return new LegendaryTourmaline();
+                case 6:
+                    return new LegendarySkull();
+                case 7:
+                    return new LegendaryWood();
+                case 8:
+                    return new FenCrystal();
+                case 9:
+                    return new RhoCrystal();
+                case 10:
+                    return new RysCrystal();
+                case 11:
+                    return new WyrCrystal();
+                case 12:
+                    return new FreCrystal();
+                case 13:
+                    return new TorCrystal();
+                case 14:
+                    return new VelCrystal();
+                case 15:
+                    return new XenCrystal();
+                case 16:
+                    return new PolCrystal();
+                case 17:
+                    return new WolCrystal();
+                case 18:
+                    return new BalCrystal();
+                case 19:
+                    return new TalCrystal();
+                case 20:
+                    return new JalCrystal();
+                case 21:
+                    return new RalCrystal();
+                case 22:
+                    return new KalCrystal();
+            }
+        }
+        
+        public Item HighAugment()
+        {
+            switch ( Utility.Random(2) )
+            {
+                default:
+                case 0:
+                    return new MythicAmethyst();
+                case 1:
+                    return new MythicDiamond();
+                case 2:
+                    return new MythicEmerald();
+                case 3:
+                    return new MythicRuby();
+                case 4:
+                    return new MythicSapphire();
+                case 5: 
+                    return new MythicTourmaline();
+                case 6:
+                    return new MythicSkull();
+                case 7:
+                    return new MythicWood();
+                case 8:
+                    return new RadiantKalCrystal();
+                case 9:
+                    return new RadiantRhoCrystal();
+                case 10:
+                    return new RadiantRysCrystal();
+                case 11:
+                    return new RadiantWyrCrystal();
+                case 12:
+                    return new RadiantFreCrystal();
+                case 13:
+                    return new RadiantTorCrystal();
+                case 14:
+                    return new RadiantVelCrystal();
+                case 15:
+                    return new RadiantXenCrystal();
+                case 16:
+                    return new RadiantPolCrystal();
+                case 17:
+                    return new RadiantWolCrystal();
+                case 18:
+                    return new RadiantBalCrystal();
+                case 19:
+                    return new RadiantTalCrystal();
+                case 20:
+                    return new RadiantJalCrystal();
+                case 21:
+                    return new RadiantRalCrystal();
+                case 22:
+                    return new TyrRune();
+                case 23:
+                    return new AhmRune();
+                case 24:
+                    return new MorRune();
+                case 25:
+                    return new MefRune();
+                case 26:
+                    return new YlmRune();
+                case 27:
+                    return new KotRune();
+                case 28:
+                    return new JorRune();
+            }
+        }
+        
 		public override bool OnBeforeDeath()
 		{
 			int treasureLevel = TreasureMapLevel;
@@ -4887,6 +5051,20 @@ namespace Server.Mobiles
 					}
 				}
 			}
+            
+            int gemChance = Utility.Random(100);
+            if (gemChance < 3) {
+                if (this.HitsMax < 200) {
+                    PackItem(LowAugment());
+                }
+                else if (this.HitsMax < 1000) {
+                    PackItem(MidAugment());
+                }
+                else {
+                    PackItem(HighAugment());
+                }
+            }
+             
 
 			if (!Summoned && !NoKillAwards && !m_HasGeneratedLoot)
 			{

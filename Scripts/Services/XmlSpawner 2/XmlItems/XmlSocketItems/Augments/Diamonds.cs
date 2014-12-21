@@ -26,7 +26,7 @@ namespace Server.Items
         {
             get
             {
-                return 3;
+                return 1;
             }
         }
         public override int Icon
@@ -173,7 +173,7 @@ namespace Server.Items
         {
             get
             {
-                return 2;
+                return 1;
             }
         }
         public override int Icon

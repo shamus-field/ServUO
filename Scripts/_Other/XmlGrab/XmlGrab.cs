@@ -182,6 +182,10 @@ namespace Server.Commands
 			ArrayList itemstoloot = new ArrayList();
 
 			Container lootBag = GetLootBag( from );
+            if (from.Backpack.FindItemByType( typeof(LootBag) ) == null) 
+            {
+                from.AddToBackpack ( new LootBag());
+            }
 
 			foreach(Item item in loothopefuls)
 			{

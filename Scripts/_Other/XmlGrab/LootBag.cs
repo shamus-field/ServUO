@@ -15,7 +15,6 @@ namespace Server.Items
 			Weight = 0.0;
 			Hue = 1266;
 			Name = "a loot bag";
-			LootType = LootType.Blessed;
 		}
 
 		public LootBag( Serial serial ) : base( serial )

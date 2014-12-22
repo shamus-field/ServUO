@@ -33,6 +33,7 @@ namespace Server.Mobiles
             this.Movable = true;
             this.Name = "guardian spawner";
             this.Stop();
+            this.LootType = LootType.Blessed;
             this.Visible = true;
             this.ItemID = 0x1f1c;
         }

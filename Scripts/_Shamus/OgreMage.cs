@@ -11,8 +11,9 @@ namespace Server.Mobiles
         public OgreMage()
             : base(AIType.AI_Mage, FightMode.Closest, 10, 1, 0.2, 0.4)
         {
-            this.Name = "an ogre lord";
+            this.Name = "an ogre mage";
             this.Body = 83;
+            this.Hue = 91;
             this.BaseSoundID = 427;
 
             this.SetStr(524, 645);
@@ -43,6 +44,8 @@ namespace Server.Mobiles
             this.VirtualArmor = 50;
 
             this.PackItem(new Club());
+            this.PackItem(Loot.RandomScroll(40, 64, SpellbookType.Regular));
+            this.PackItem(Loot.RandomScroll(40, 64, SpellbookType.Regular));
         }
 
         public OgreMage(Serial serial)
@@ -94,9 +97,7 @@ namespace Server.Mobiles
         }
         public override void GenerateLoot()
         {
-            this.AddLoot(LootPack.Rich, 2);
-            this.AddLoot(LootPack.MedScrolls, 1);
-            this.AddLoot(LootPack.HighScrolls, 1);
+            this.AddLoot(LootPack.Rich, 4);
         }
 
         public override void Serialize(GenericWriter writer)

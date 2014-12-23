@@ -4856,26 +4856,6 @@ namespace Server.Mobiles
                     return new AncientSkull();
                 case 7:
                     return new AncientWood();
-                case 8:
-                    return new GlimmeringGranite();
-                case 9:
-                    return new GlimmeringClay();
-                case 10:
-                    return new GlimmeringHeartstone();
-                case 11:
-                    return new GlimmeringGypsum();
-                case 12:
-                    return new GlimmeringIronOre();
-                case 13:
-                    return new GlimmeringOnyx();
-                case 14:
-                    return new GlimmeringMarble();
-                case 15:
-                    return new GlimmeringPetrifiedWood();
-                case 16:
-                    return new GlimmeringLimestone();
-                case 17:
-                    return new GlimmeringBloodrock();
             }
         }
         
@@ -5053,7 +5033,7 @@ namespace Server.Mobiles
 			}
             
             int gemChance = Utility.Random(100);
-            if (gemChance < 3) {
+            if (gemChance < 2) {
                 if (this.HitsMax < 200) {
                     PackItem(LowAugment());
                 }

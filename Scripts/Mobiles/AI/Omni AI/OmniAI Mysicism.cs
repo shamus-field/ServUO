@@ -27,7 +27,8 @@ namespace Server.Mobiles
                 case 0:
                 case 1:
                     {
-                        if (this.CheckForSleep(this.m_Mobile.Combatant))
+                        //if (this.CheckForSleep(this.m_Mobile.Combatant))
+                        if (this.m_Mobile.Combatant != null && !this.m_Mobile.Combatant.Asleep)
                         {
                             this.m_Mobile.DebugSay("Casting Sleep");
                             spell = new SleepSpell(this.m_Mobile, null);

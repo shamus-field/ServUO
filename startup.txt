@@ -1,0 +1,15 @@
+nerun's distro spawn
+add skill stone
+add guardian spawners to players
+
+
+
+
+
+
+ideas
+
+fix mysticism
+legendary items (colored names?)
+add wave "events" via xmlspawner
+add summoner ai

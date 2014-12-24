@@ -93,7 +93,15 @@ namespace Server.Mobiles
                 return (this.m_Mobile.Skills[SkillName.Mysticism].Base >= 10.0);
             }
         }
-
+        
+        public virtual bool m_IsSummoner
+        {
+            get
+            {
+                return false;
+            }
+        }
+        
         public virtual bool m_SwapWeapons
         {
             get
@@ -189,6 +197,11 @@ namespace Server.Mobiles
         }
 
         #endregion
+        
+        public virtual void SummonerPower()
+        {
+            return;
+        }
 
         public override bool DoActionCombat()
         {
@@ -317,6 +330,12 @@ namespace Server.Mobiles
 
                 List<int> skill = new List<int>();
 
+                if (this.m_IsSummoner)
+                {
+                    this.SummonerPower();
+                    return true;
+                }
+                
                 if (this.m_CanUseBushido)
                     skill.Add(1);
                 if (this.m_CanUseChivalry)

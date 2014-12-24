@@ -29,27 +29,27 @@ namespace Server.Mobiles
             this.Race.RandomFacialHair(this);
         
             
-            this.SetStr(level * 35, level * 35);
-            this.SetDex(level * 25, level * 25);
-            this.SetInt(level * 15, level * 15);
-            this.SetHits(level * (20 * level), level * (25 * level));
+            this.SetStr(level * 31, level * 35);
+            this.SetDex(level * 21, level * 25);
+            this.SetInt(level * 11, level * 15);
+            this.SetHits(level * (17 * level), level * (25 * level));
 
-            this.SetDamage(level * (5 * level), level * (5 * level));
+            this.SetDamage(level * (2 * level), level * (3 * level));
             
-            this.SetSkill(SkillName.Tactics, 30 * level, 30 * level);
-            this.SetSkill(SkillName.Magery, 10 * level, 10 * level);
-            this.SetSkill(SkillName.Swords, 30 * level, 30 * level);
-            this.SetSkill(SkillName.Parry, 30 * level, 30 * level);
-            this.SetSkill(SkillName.Macing, 30 * level, 30 * level);
-            this.SetSkill(SkillName.Focus, 30 * level, 30 * level);
-            this.SetSkill(SkillName.Wrestling, 30 * level, 30 * level);
-            this.SetSkill(SkillName.MagicResist, 20 * level, 20 * level);
+            this.SetSkill(SkillName.Tactics, 24 * level, 30 * level);
+            this.SetSkill(SkillName.Magery, 7 * level, 10 * level);
+            this.SetSkill(SkillName.Swords, 24 * level, 30 * level);
+            this.SetSkill(SkillName.Parry, 24 * level, 30 * level);
+            this.SetSkill(SkillName.Macing, 24 * level, 30 * level);
+            this.SetSkill(SkillName.Focus, 24 * level, 30 * level);
+            this.SetSkill(SkillName.Wrestling, 24 * level, 30 * level);
+            this.SetSkill(SkillName.MagicResist, 17 * level, 20 * level);
             
-            this.SetResistance(ResistanceType.Physical, 15 * level, 15 * level);
-            this.SetResistance(ResistanceType.Fire, 15 * level, 15 * level);
-            this.SetResistance(ResistanceType.Cold, 15 * level, 15 * level);
-            this.SetResistance(ResistanceType.Poison, 15 * level, 15 * level);
-            this.SetResistance(ResistanceType.Energy, 15 * level, 15 * level);
+            this.SetResistance(ResistanceType.Physical, 12 * level, 15 * level);
+            this.SetResistance(ResistanceType.Fire, 12 * level, 15 * level);
+            this.SetResistance(ResistanceType.Cold, 12 * level, 15 * level);
+            this.SetResistance(ResistanceType.Poison, 12 * level, 15 * level);
+            this.SetResistance(ResistanceType.Energy, 12 * level, 15 * level);
             
             this.Fame = 100 * level;
             this.Karma = 100 * level;

@@ -44,8 +44,8 @@ namespace Server.Mobiles
             this.VirtualArmor = 50;
 
             this.PackItem(new Club());
-            this.PackItem(Loot.RandomScroll(40, 64, SpellbookType.Regular));
-            this.PackItem(Loot.RandomScroll(40, 64, SpellbookType.Regular));
+            this.PackItem(Loot.RandomScroll(32, 64, SpellbookType.Regular));
+            this.PackItem(Loot.RandomScroll(32, 64, SpellbookType.Regular));
         }
 
         public OgreMage(Serial serial)

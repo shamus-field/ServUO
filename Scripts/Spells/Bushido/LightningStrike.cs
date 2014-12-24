@@ -49,17 +49,6 @@ namespace Server.Spells.Bushido
             return 50;
         }
 
-        public override bool Validate(Mobile from)
-        {
-            bool isValid = base.Validate(from);
-            if (isValid)
-            {
-                PlayerMobile ThePlayer = from as PlayerMobile;
-                ThePlayer.ExecutesLightningStrike = this.BaseMana;
-            }
-            return isValid;
-        }
-
         public override bool IgnoreArmor(Mobile attacker)
         {
             double bushido = attacker.Skills[SkillName.Bushido].Value;
@@ -86,12 +75,6 @@ namespace Server.Spells.Bushido
                 this.CheckGain(attacker);
                 this.SetContext(attacker);
             }
-        }
-
-        public override void OnClearMove(Mobile attacker)
-        {
-            PlayerMobile ThePlayer = attacker as PlayerMobile; // this can be deletet if the PlayerMobile parts are moved to Server.Mobile 
-            ThePlayer.ExecutesLightningStrike = 0;
         }
     }
 }

@@ -172,6 +172,7 @@ namespace Server
 		private static readonly Type[] m_JewelryTypes = new[]
 		{
 			typeof(GoldRing), typeof(GoldBracelet), typeof(GargishRing), typeof(SilverRing), typeof(SilverBracelet),
+            typeof(GoldEarrings), typeof(SilverEarrings), typeof(GoldNecklace), typeof(SilverNecklace),
 			typeof(GargishBracelet), typeof(GargishNecklace), typeof(GargishEarrings)
 		};
 

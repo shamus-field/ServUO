@@ -245,6 +245,7 @@ namespace Server.Engines.Craft
             #endregion
 
             #region Misc
+            this.AddCraft(typeof(CraftBag, 1015283, "craft deposit bag", 5.6, 15.1, typeof(Leather), "Leather", 100, "You need more leather");
             this.AddCraft(typeof(BodySash), 1015283, 1025441, 4.1, 29.1, typeof(Cloth), 1044286, 4, 1044287);
             this.AddCraft(typeof(HalfApron), 1015283, 1025435, 20.7, 45.7, typeof(Cloth), 1044286, 6, 1044287);
             this.AddCraft(typeof(FullApron), 1015283, 1025437, 29.0, 54.0, typeof(Cloth), 1044286, 10, 1044287);

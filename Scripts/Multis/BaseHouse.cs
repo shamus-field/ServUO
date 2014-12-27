@@ -3506,7 +3506,7 @@ namespace Server.Multis
             if (a == null)
                 return false;
 
-            for (int i = 0; i < a.Length; ++i)
+            for (int i = 4; i < a.Length; ++i)
                 if (a[i] != null && HasHouse(a[i]))
                     return true;
 

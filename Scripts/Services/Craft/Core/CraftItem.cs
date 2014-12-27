@@ -1198,6 +1198,23 @@ namespace Server.Engines.Craft
 			}
 		}
 
+        public static Container GetCraftBag( Mobile from )
+		{
+			Container CraftBag = from.Backpack.FindItemByType( typeof(CraftBag) ) as Container;
+			return ( null == CraftBag ) ? from.Backpack : CraftBag;
+		}
+
+		public static void DropCraft( Mobile from, Item craftitem, Container craftbag )
+		{
+			List<Item> list = craftbag.Items;
+			for ( int i = 0; i < list.Count; ++i )
+			{
+				Item item1 = list[i];
+				if ( !(item1 is Container) && item1.StackWith( from, craftitem, false ) ) return;
+			}
+			if ( !craftbag.TryDropItem( from, craftitem, false ) ) craftitem.MoveToWorld( from.Location, from.Map );
+		}
+        
 		public void CompleteCraft(
 			int quality,
 			bool makersMark,
@@ -1438,6 +1455,8 @@ namespace Server.Engines.Craft
 					{
 						item.Hue = resHue;
 					}
+                    
+                    Container craftbag = GetCraftBag( from );
 
 					if (maxAmount > 0)
 					{
@@ -1473,7 +1492,9 @@ namespace Server.Engines.Craft
 					}
 					#endregion
 
-					from.AddToBackpack(item);
+                    //shamus - add to craft bag change
+					//from.AddToBackpack(item);
+                    DropCraft( from, item, craftbag );
 
 					if (from.IsStaff())
 					{

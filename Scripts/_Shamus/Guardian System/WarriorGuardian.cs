@@ -21,7 +21,6 @@ namespace Server.Mobiles
             {
                 this.Body = 0x190;
                 this.Name = NameList.RandomName("male");
-                this.AddItem(new ShortPants(Utility.RandomNeutralHue()));
             }
             this.Title = "the warrior";
             this.HairItemID = this.Race.RandomHair(this.Female);
@@ -67,7 +66,7 @@ namespace Server.Mobiles
             this.AddItem(new Shirt());
 
             // Pick a random sword
-            switch ( Utility.Random(5)) 
+            switch ( Utility.Random(4)) 
             {
                 case 0:
                     this.AddItem(new Longsword());
@@ -79,9 +78,6 @@ namespace Server.Mobiles
                     this.AddItem(new VikingSword());
                     break;
                 case 3:
-                    this.AddItem(new BattleAxe());
-                    break;
-                case 4:
                     this.AddItem(new Mace());
                     break;
             }
